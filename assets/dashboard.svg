@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="220" font-family="system-ui, sans-serif" font-size="15">
+  <rect width="640" height="220" fill="#ffffff"/>
+  <text x="24" y="40" font-size="20" font-weight="bold" fill="#1a1a1a">lantern</text>
+
+  <line x1="24" y1="64" x2="616" y2="64" stroke="#dddddd"/>
+  <text x="24" y="84" fill="#777777">service</text>
+  <text x="190" y="84" fill="#777777">status</text>
+  <text x="330" y="84" fill="#777777">response</text>
+  <text x="450" y="84" fill="#777777">last ok</text>
+  <text x="545" y="84" fill="#777777">since</text>
+  <line x1="24" y1="96" x2="616" y2="96" stroke="#dddddd"/>
+
+  <text x="24" y="124" fill="#1a1a1a">podcast</text>
+  <text x="190" y="124" fill="#0a7d28">&#9679; up</text>
+  <text x="330" y="124" fill="#1a1a1a">34ms</text>
+  <text x="450" y="124" fill="#1a1a1a">2s ago</text>
+  <text x="545" y="124" fill="#1a1a1a">4h ago</text>
+  <line x1="24" y1="136" x2="616" y2="136" stroke="#dddddd"/>
+
+  <text x="24" y="164" fill="#1a1a1a">vm-broker</text>
+  <text x="190" y="164" fill="#c0261d">&#9679; down</text>
+  <text x="330" y="164" fill="#1a1a1a">&#8212;</text>
+  <text x="450" y="164" fill="#1a1a1a">6m ago</text>
+  <text x="545" y="164" fill="#1a1a1a">6m ago</text>
+  <line x1="24" y1="176" x2="616" y2="176" stroke="#dddddd"/>
+
+  <text x="24" y="204" font-size="12" fill="#777777">auto-refreshes every 15s &#183; /api for JSON</text>
+</svg>

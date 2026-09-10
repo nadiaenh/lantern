@@ -1,0 +1,11 @@
+# lantern config. Copy this file and edit it for your tailnet.
+interval = "15s"   # time between check rounds
+timeout  = "5s"    # per-service HTTP timeout
+
+[[services]]
+name = "podcast"
+url  = "http://podcast-server:8080/health"
+
+[[services]]
+name = "vm-broker"
+url  = "http://lab-server:8080/health"
