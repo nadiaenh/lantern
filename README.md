@@ -1,4 +1,4 @@
-<p align="center"><img src="https://img.shields.io/badge/Go-1.23%2B-00ADD8?logo=go&logoColor=white" alt="Go 1.23+"> <img src="https://img.shields.io/badge/runtime_dependencies-0-2ea44f" alt="Zero dependencies"> <a href="https://tailscale.com/"><img src="https://img.shields.io/badge/network-Tailscale-242424?logo=tailscale&logoColor=white" alt="Tailscale"></a></p>
+<p align="center"><img src="https://img.shields.io/badge/Go-1.23%2B-00ADD8?logo=go&logoColor=white" alt="Go 1.23+"><a href="https://tailscale.com/"><img src="https://img.shields.io/badge/network-Tailscale-242424?logo=tailscale&logoColor=white" alt="Tailscale"></a></p>
 
 **lantern** is a small private uptime monitor for services across your devices. It runs as one Go binary, checks each service in a config file, and shows a tiny dashboard: reachable, response time, last successful check. It answers "is the machine offline, or is just the application broken?"
 
