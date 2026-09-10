@@ -7,7 +7,7 @@
 Requires Go 1.23+. On a fresh macOS machine, install [Homebrew](https://brew.sh), then:
 
 ```sh
-git clone https://github.com/nadiaenh/lantern.git
+git clone git@github.com:nadiaenh/lantern.git
 cd lantern
 brew bundle
 go build -o lantern .
