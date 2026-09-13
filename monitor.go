@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Status is the reachability of a service.
+// Status is a service's reachability.
 type Status string
 
 const (
@@ -16,7 +16,7 @@ const (
 	StatusDown    Status = "down"
 )
 
-// Check is the result of one probe.
+// Check is the outcome of a single probe.
 type Check struct {
 	Time    time.Time     `json:"time"`
 	Status  Status        `json:"status"`
@@ -25,20 +25,20 @@ type Check struct {
 	Code    int           `json:"code,omitempty"`
 }
 
-// ServiceState is the live view of one service, kept in memory.
+// ServiceState is one service's current in-memory status.
 type ServiceState struct {
 	Name        string    `json:"name"`
 	URL         string    `json:"url"`
 	Status      Status    `json:"status"`
-	Since       time.Time `json:"since"`        // when Status last changed
-	LastSuccess time.Time `json:"last_success"` // zero if never
+	Since       time.Time `json:"since"` // when Status last changed
+	LastSuccess time.Time `json:"last_success"`
 	Last        Check     `json:"last"`
-	History     []Check   `json:"history"` // newest last, capped
+	History     []Check   `json:"history"` // most recent last
 }
 
 const historyLen = 50
 
-// Monitor probes services on an interval and holds their state in memory.
+// Monitor periodically probes services and holds their latest state.
 type Monitor struct {
 	client  *http.Client
 	timeout time.Duration
@@ -61,7 +61,7 @@ func NewMonitor(services []Service, timeout time.Duration) *Monitor {
 	return m
 }
 
-// Run probes every service immediately, then every interval until ctx is done.
+// Run probes immediately, then on every tick until ctx is canceled.
 func (m *Monitor) Run(ctx context.Context, interval time.Duration) {
 	m.probeAll(ctx)
 	t := time.NewTicker(interval)
@@ -91,7 +91,7 @@ func (m *Monitor) probeAll(ctx context.Context) {
 	wg.Wait()
 }
 
-// probe performs one HTTP GET and classifies the outcome.
+// probe issues one HTTP GET and classifies the result as up or down.
 func probe(ctx context.Context, client *http.Client, url string) Check {
 	start := time.Now()
 	c := Check{Time: start}
@@ -116,7 +116,7 @@ func probe(ctx context.Context, client *http.Client, url string) Check {
 	return c
 }
 
-// apply folds a fresh check into a service's state and returns the updated copy.
+// apply records a check into the named service's state.
 func (m *Monitor) apply(name string, c Check) ServiceState {
 	m.mu.Lock()
 	defer m.mu.Unlock()
@@ -136,7 +136,7 @@ func (m *Monitor) apply(name string, c Check) ServiceState {
 	return *st
 }
 
-// Snapshot returns a copy of every service state, in config order.
+// Snapshot returns every service's current state, in config order.
 func (m *Monitor) Snapshot() []ServiceState {
 	m.mu.RLock()
 	defer m.mu.RUnlock()

@@ -1,4 +1,4 @@
-// lantern is a small private uptime monitor for services across your devices.
+// Package main is lantern, a private uptime monitor for services on a tailnet.
 package main
 
 import (

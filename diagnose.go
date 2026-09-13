@@ -12,8 +12,7 @@ import (
 	"time"
 )
 
-// diagnose reports DNS, Tailscale connectivity, and the HTTP check separately,
-// so you can tell "machine offline" from "app broken".
+// diagnose isolates DNS, Tailscale, and HTTP so each failure mode is distinguishable.
 func diagnose(cfg *Config, name string) error {
 	var svc *Service
 	for i := range cfg.Services {
@@ -32,7 +31,7 @@ func diagnose(cfg *Config, name string) error {
 	}
 	host := u.Hostname()
 
-	// 1. DNS / name resolution.
+	// DNS resolution.
 	ips, err := net.LookupHost(host)
 	if err != nil {
 		fmt.Printf("DNS        FAIL  %v\n", err)
@@ -40,7 +39,7 @@ func diagnose(cfg *Config, name string) error {
 		fmt.Printf("DNS        ok    %s -> %s\n", host, strings.Join(ips, ", "))
 	}
 
-	// 2. Tailscale connectivity to the host.
+	// Tailscale reachability.
 	if _, err := exec.LookPath("tailscale"); err != nil {
 		fmt.Printf("Tailscale  skip  tailscale CLI not found\n")
 	} else {
@@ -55,7 +54,7 @@ func diagnose(cfg *Config, name string) error {
 		}
 	}
 
-	// 3. The HTTP health check on its own.
+	// HTTP health check.
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.Timeout)
 	defer cancel()
 	start := time.Now()
@@ -75,7 +74,7 @@ func diagnose(cfg *Config, name string) error {
 	return nil
 }
 
-// firstLine returns the first meaningful line, skipping tailscale's version-skew warnings.
+// firstLine returns the first non-warning line of tailscale's output.
 func firstLine(b []byte) string {
 	for _, ln := range strings.Split(string(b), "\n") {
 		ln = strings.TrimSpace(ln)

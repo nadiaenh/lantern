@@ -17,25 +17,25 @@ func TestStatusTransitions(t *testing.T) {
 		return m.apply("svc", Check{Time: now.Add(dt), Status: s})
 	}
 
-	// first success: unknown -> up, Since set, LastSuccess set
+	// unknown -> up
 	st := step(StatusUp, 0)
 	if st.Status != StatusUp || !st.Since.Equal(now) || st.LastSuccess.IsZero() {
 		t.Fatalf("first up: %+v", st)
 	}
 
-	// stays up: Since unchanged
+	// stays up
 	st = step(StatusUp, time.Second)
 	if !st.Since.Equal(now) {
 		t.Fatalf("stable up moved Since: %+v", st)
 	}
 
-	// up -> down: Since advances, LastSuccess frozen
+	// up -> down
 	st = step(StatusDown, 2*time.Second)
 	if st.Status != StatusDown || !st.Since.Equal(now.Add(2*time.Second)) || !st.LastSuccess.Equal(now.Add(time.Second)) {
 		t.Fatalf("up->down: %+v", st)
 	}
 
-	// down -> up: recovers, LastSuccess updates
+	// down -> up
 	st = step(StatusUp, 3*time.Second)
 	if st.Status != StatusUp || !st.LastSuccess.Equal(now.Add(3*time.Second)) {
 		t.Fatalf("down->up: %+v", st)

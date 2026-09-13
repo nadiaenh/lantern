@@ -50,7 +50,7 @@ var dashboardTmpl = template.Must(template.New("dash").Funcs(template.FuncMap{
 </body>
 </html>`))
 
-// newServer returns the HTTP handler for the dashboard and its JSON API.
+// newServer builds the dashboard and JSON API handler.
 func newServer(m *Monitor, refresh time.Duration) http.Handler {
 	sec := int(refresh.Seconds())
 	if sec < 1 {
