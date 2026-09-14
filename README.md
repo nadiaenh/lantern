@@ -2,7 +2,7 @@
 
 **lantern** is a small private uptime monitor for services across your devices. It runs as one Go binary, checks each service in a config file, and shows a tiny dashboard: reachable, response time, last successful check. It answers "is the machine offline, or is just the application broken?"
 
-<p align="center"><img src="assets/lantern.gif" alt="Lantern"></p>
+<p align="center"><img width="256" src="assets/lantern.gif" alt="Lantern"></p>
 
 ## Setup
 
